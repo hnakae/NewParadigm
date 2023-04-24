@@ -12,11 +12,20 @@ datasource db {
 }
 
 model Product {
-  id          Int      @id @default(autoincrement())
+  id          Int       @id @default(autoincrement())
   name        String
-  description String?
-  price       Float
-  image       String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  description String
+  price       Decimal
+  image       String
+  category    Category? @relation(fields: [category_id], references: [id])
+  category_id Int
+
+  @@index([category_id])
+}
+
+model Category {
+  id          Int       @id @default(autoincrement())
+  name        String
+  description String
+  products    Product[]
 }
